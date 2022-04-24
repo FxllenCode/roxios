@@ -21,6 +21,9 @@ jobs:
       - name: Install Foreman Toolchains
         run: foreman install
 
+      - name: Install Dependencies
+        run: wally install
+
       - name: Run Stylua
         run: stylua lib --check
 
