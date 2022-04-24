@@ -1,0 +1,27 @@
+{
+    "name": "Monolith Test",
+    "tree": {
+      "$className": "DataModel",
+      "ReplicatedStorage": {
+        "$className": "ReplicatedStorage",
+        "roxios": {
+            "$path": "Include/Linking.lua",
+            "Packages": {
+                "$path": "Packages",
+                "roxios": {
+                    "$path": "lib/roxios.lua"
+                }        
+              }
+        
+      }
+       
+      },
+      "ServerScriptService": {
+          "$className": "ServerScriptService",
+          "Server": {
+            "$path": "testing"
+          }
+      }
+    }
+    
+  }
