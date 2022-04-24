@@ -9,7 +9,7 @@ local module = {}
 type Options = {
 	Url: string,
 	Method: string?,
-	Headers: table?,
+	Headers: any?,
 	Body: string?,
 }
 function module.Request(options: Options)
@@ -35,11 +35,8 @@ function module.Request(options: Options)
 	end)
 end
 
-function module.GUID(braces: boolean?)
-	return HttpService:GenerateGUID(braces or false)
-end
 
-function module.Get(url: string, noCache: boolean?, headers: table?)
+function module.Get(url: string, noCache: boolean?, headers: any?)
 	return Promise.new(function(resolve, reject)
 		local function request()
 			local response = HttpService:GetAsync(url, noCache or false, headers)
@@ -60,19 +57,14 @@ function module.Get(url: string, noCache: boolean?, headers: table?)
 		end
 	end)
 end
-function module.Decode(input: string)
-	return HttpService:JSONDecode(input)
-end
-function module.Encode(input: table)
-	return HttpService:JSONEncode(input)
-end
+
 
 function module.Post(
 	url: string,
 	json: string,
 	content_type: Enum.HttpContentType?,
 	compress: boolean?,
-	headers: table?
+	headers: any?
 )
 	return Promise.new(function(resolve, reject)
 		local function request()

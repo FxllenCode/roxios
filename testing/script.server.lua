@@ -1,10 +1,10 @@
-local BetterHttp = require(game.ReplicatedStorage.roxios)
+local roxios = require(game.ReplicatedStorage.roxios)
 local HttpService = game:GetService("HttpService")
-BetterHttp.Request({
-	Url = "http://httpbin.org/post", -- This website helps debug HTTP requests
+roxios.Request({
+	Url = "http://httpbin.org/post",
 	Method = "POST",
 	Headers = {
-		["Content-Type"] = "application/json", -- When sending JSON, set this!
+		["Content-Type"] = "application/json",
 	},
 	Body = HttpService:JSONEncode({ hello = "world" }),
 })
