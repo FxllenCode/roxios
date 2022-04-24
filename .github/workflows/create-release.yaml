@@ -1,0 +1,63 @@
+name: Releases
+
+on: push
+
+jobs: 
+
+  - name: Create release
+    runs-on: ubuntu-latest
+    if: ${{ github.ref == 'refs/heads/master' }}
+
+    steps:
+      - name: Checkout master
+        uses: actions/checkout@v2
+
+      - name: Setup Foreman
+        uses: Roblox/setup-foreman@v1
+        with: 
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install Foreman Toolchains
+        run: foreman install
+
+      - name: Run Stylua
+        run: stylua lib --check
+
+      - name: Run Selene
+        run : selene lib
+
+      - name: Wally Login
+        run: wally login
+
+      - name: Wally Release
+        run: wally publish
+
+      - name: Wally Logout
+        run: wally logout
+
+      - name: Build pack.rbxm
+        run: rojo build -o pack.rbxm pack.project.json
+
+      - name: Upload pack.rbxm as build artifact
+        uses: actions/upload-release-asset@v1
+        env: 
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with: 
+          asset: pack.rbxm
+          name: pack.rbxm
+          label: pack.rbxm
+
+      - name: Get Release from wally.toml
+        id: read_toml
+        with: 
+          file: 'wally.toml'
+          field: 'package.version'
+
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with: 
+          body: ${{ github.workspace }}-CHANGELOG.txt
+          draft: false
+          files: pack.rbxm
+          name: steps.read_toml.outputs.value
+

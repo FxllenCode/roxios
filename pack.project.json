@@ -1,0 +1,12 @@
+{
+    "name": "roxios",
+    "tree": {
+      "$path": "Include/Linking.lua",
+      "Packages": {
+        "$path": "Packages",
+        "roxios": {
+            "$path": "lib/roxios.lua"
+        }        
+      }
+    }
+  }
