@@ -108,48 +108,47 @@ https://devforum.roblox.com/t/psa-stop-using-roblox-proxies/1573256
 
 ## API
 
-### `roxios.Request(options: Options)`
+### ```roxios.Request(options: Options)```
 
-    * `options`: The options to pass to `HttpService:RequestAsync(options)` (see [HttpService:RequestAsync](https://developer.roblox.com/en-us/api-reference/function/HttpService/RequestAsync))
+* `options`: The options to pass to `HttpService:RequestAsync(options)` (see [HttpService:RequestAsync](https://developer.roblox.com/en-us/api-reference/function/HttpService/RequestAsync))
 
-    **Returns: A promise, which resolves to `parsedResponse, rawResponse`, or rejects with an error.**
+**Returns: A promise, which resolves to `parsedResponse, rawResponse`, or rejects with an error.**
 
-### `roxios.Get(url: string, noCache: boolean?, headers: any?)`
+### ```roxios.Get(url: string, noCache: boolean?, headers: any?)```
 
-    * `url`: The url to request.
+* `url`: The url to request.
 
-    * `noCache`: Whether or not to use the cache.
+* `noCache`: Whether or not to use the cache.
 
-    * `headers`: Any headers to pass to the request.
+* `headers`: Any headers to pass to the request.
 
-    **Returns: A promise, which resolves to `parsedResponse, rawResponse`, or rejects with an error.**
+**Returns: A promise, which resolves to `parsedResponse, rawResponse`, or rejects with an error.**
 
-    * Note: This is a wrapper for [`HttpService:GetAsync(url, noCache, headers)`](https://developer.roblox.com/en-us/api-reference/function/HttpService/GetAsync)
+* Note: This is a wrapper for [`HttpService:GetAsync(url, noCache, headers)`](https://developer.roblox.com/en-us/api-reference/function/HttpService/GetAsync)
 
-### `roxios.Post(url: string, json: string, content_type: Enum.HttpContentType?, compress: boolean?, headers: any?)`
+### ```roxios.Post(url: string, json: string, content_type: Enum.HttpContentType?, compress: boolean?, headers: any?)```
 
-    * `url`: The url to request.
+* `url`: The url to request.
 
-    * `json`: The json to send.
+* `json`: The json to send.
 
-    * `content_type`: The content type to request back.
+* `content_type`: The content type to request back.
 
-    * `compress`: Whether or not to compress the request.
+* `compress`: Whether or not to compress the request.
 
-    * `headers`: Any headers to pass to the request.
+* `headers`: Any headers to pass to the request.
+
+ **Returns: A promise, which resolves to `parsedResponse, rawResponse`, or rejects with an error.**
+
+* Note: This is a wrapper for [`HttpService:PostAsync(url, body, noCache, headers)`](https://developer.roblox.com/en-us/api-reference/function/HttpService/PostAsync)
+
+### ```roxios.RbxApiRequest(options: Options)```
+
+* `options`: The options to pass to `HttpRbxApiService:RequestAsync(options)` (see [HttpRbxApiService:RequestAsync](https://developer.roblox.com/en-us/api-reference/function/HttpRbxApiService/RequestAsync))
+
+**Returns: A promise, which resolves to `parsedResponse, rawResponse`, or rejects with an error.**
 
 
-    **Returns: A promise, which resolves to `parsedResponse, rawResponse`, or rejects with an error.**
-
-    * Note: This is a wrapper for [`HttpService:PostAsync(url, body, noCache, headers)`](https://developer.roblox.com/en-us/api-reference/function/HttpService/PostAsync)
-
-### `roxios.RbxApiRequest(options: Options)`
-
-    * `options`: The options to pass to `HttpRbxApiService:RequestAsync(options)` (see [HttpRbxApiService:RequestAsync](https://developer.roblox.com/en-us/api-reference/function/HttpRbxApiService/RequestAsync))
-
-    **Returns: A promise, which resolves to `parsedResponse, rawResponse`, or rejects with an error.**
-
-### 
 
 ## Example
 
