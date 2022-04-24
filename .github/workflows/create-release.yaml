@@ -53,7 +53,7 @@ jobs:
         uses: softprops/action-gh-release@v1
         with: 
           body: ${{ github.workspace }}-CHANGELOG.txt
-          draft: false
+          draft: true
           files: pack.rbxm
           name: steps.read_toml.outputs.value
 
