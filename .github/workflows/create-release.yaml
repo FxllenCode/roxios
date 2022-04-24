@@ -27,15 +27,6 @@ jobs:
       - name: Run Selene
         run : selene lib
 
-      # - name: Wally Login
-      #   run: wally login
-
-      - name: Wally Release
-        run: wally publish
-
-      - name: Wally Logout
-        run: wally logout
-
       - name: Build pack.rbxm
         run: rojo build -o pack.rbxm pack.project.json
 
