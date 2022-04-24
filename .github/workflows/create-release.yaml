@@ -4,13 +4,14 @@ on: push
 
 jobs: 
 
-  - name: Create release
-    runs-on: ubuntu-latest
+  deploy:
     if: ${{ github.ref == 'refs/heads/master' }}
+    runs-on: ubuntu-latest
+
 
     steps:
       - name: Checkout master
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Setup Foreman
         uses: Roblox/setup-foreman@v1
