@@ -35,7 +35,6 @@ function module.Request(options: Options)
 	end)
 end
 
-
 function module.Get(url: string, noCache: boolean?, headers: any?)
 	return Promise.new(function(resolve, reject)
 		local function request()
@@ -58,14 +57,7 @@ function module.Get(url: string, noCache: boolean?, headers: any?)
 	end)
 end
 
-
-function module.Post(
-	url: string,
-	json: string,
-	content_type: Enum.HttpContentType?,
-	compress: boolean?,
-	headers: any?
-)
+function module.Post(url: string, json: string, content_type: Enum.HttpContentType?, compress: boolean?, headers: any?)
 	return Promise.new(function(resolve, reject)
 		local function request()
 			local response = HttpService:PostAsync(
