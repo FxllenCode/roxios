@@ -38,9 +38,9 @@ jobs:
         env: 
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with: 
-          asset: pack.rbxm
-          name: pack.rbxm
-          label: pack.rbxm
+          asset_path: pack.rbxm
+          asset_name: pack.rbxm
+          asset_label: pack.rbxm
 
       - name: Get Release from wally.toml
         uses: SebRollen/toml-action@v1.0.0
