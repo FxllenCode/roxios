@@ -52,48 +52,5 @@ jobs:
           body: ${{ github.workspace }}-CHANGELOG.txt
           draft: true
           files: pack.rbxm
-          name: ${{ steps.read_toml.outputs.value }}
+          name: steps.read_toml.outputs.value
 
-  development: 
-    if: ${{ github.ref == 'refs/heads/development' }}
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout development
-        uses: actions/checkout@v3
-
-      - name: Setup Foreman
-        uses: Roblox/setup-foreman@v1
-        with: 
-          token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Install Foreman Toolchains
-        run: foreman install
-
-
-      - name: Run Stylua
-        run: stylua . --check
-
-      - name: Run Selene
-        run : selene .
-
-      - name: Install Dependencies
-        run: wally install
-
-      - name: Build test-pack.rbxm
-        run: rojo build -o test-pack.rbxm pack.project.json
-
-      - name: Build testing place
-        run: rojo build -o testing.rbxl testing.project.json
-
-      - name: Upload test-pack.rbxm as build artifact
-        uses: actions/upload-artifact@v3
-        with: 
-          name: roxios
-          path: test-pack.rbxm
-
-      - name: Upload testing.rbxl as build artifact
-        uses: actions/upload-artifact@v3
-        with: 
-          name: roxios
-          path: testing.rbxl
