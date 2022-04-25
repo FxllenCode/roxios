@@ -14,104 +14,123 @@ type Options = {
 }
 function module.Request(options: Options)
 	return Promise.new(function(resolve, reject)
-		local function request()
-			local response = HttpService:RequestAsync(options)
+		local ok, response = pcall(HttpService.RequestAsync, HttpService, options)
+
+		if ok then
 			if response.Success then
-				resolve(HttpService:JSONDecode(response.Body), response)
+				local didParse, parsedResponse = pcall(HttpService.JSONDecode, HttpService, response.Body)
+				if didParse then
+					resolve(parsedResponse, response)
+				else
+					warn("Roxios warn: Failed to parse response body as JSON! Setting parsedResponse to nil!")
+					resolve(nil, response)
+				end
 			else
 				reject(
-					"roxios error: Request failed with status code "
+					"Roxios error: Request failed with status code "
 						.. response.StatusCode
-						.. " and message "
+						.. " and message: \n"
 						.. response.Body
 				)
 			end
-		end
-
-		local Success, Result = pcall(request)
-		if not Success then
-			reject("roxios error: Request Failed: " .. Result)
+		else
+			reject("Roxios error:\n" .. response)
 		end
 	end)
 end
 
 function module.Get(url: string, noCache: boolean?, headers: any?)
 	return Promise.new(function(resolve, reject)
-		local function request()
-			local response = HttpService:GetAsync(url, noCache or false, headers)
-			if response.Success then
-				resolve(HttpService:JSONDecode(response.Body), response)
+		local ok, response = pcall(HttpService.GetAsync, HttpService, url, noCache or false, headers or nil)
+		if ok then
+			if response then
+				local didParse, parsedResponse = pcall(HttpService.JSONDecode, HttpService, response)
+				if didParse then
+					resolve(parsedResponse, response)
+				else
+					warn(
+						"Roxios warn: Failed to parse response body as JSON! \n"
+							.. parsedResponse
+							.. "\n Setting parsedResponse to nil!"
+					)
+					resolve(nil, response)
+				end
 			else
-				reject(
-					"roxios error: Request failed with status code "
-						.. response.StatusCode
-						.. " and message "
-						.. response.Body
-				)
+				reject("Roxios error: No response from server!")
 			end
-		end
-		local Success, Result = pcall(request)
-		if not Success then
-			reject("roxios error: Request Failed: " .. Result)
+		else
+			reject("Roxios error:\n" .. response)
 		end
 	end)
 end
 
 function module.Post(url: string, json: string, content_type: Enum.HttpContentType?, compress: boolean?, headers: any?)
 	return Promise.new(function(resolve, reject)
-		local function request()
-			local response = HttpService:PostAsync(
-				url,
-				json,
-				content_type or Enum.HttpContentType.ApplicationJson,
-				compress or false,
-				headers
-			)
+		local ok, response = pcall(
+			HttpService.PostAsync,
+			HttpService,
+			url,
+			json,
+			content_type or Enum.HttpContentType.ApplicationJson,
+			compress or false,
+			headers or nil
+		)
+		if ok then
 			if response then
-				resolve(HttpService:JSONDecode(response), response)
+				local didParse, parsedResponse = pcall(HttpService.JSONDecode, HttpService, response)
+				if didParse then
+					resolve(parsedResponse, response)
+				else
+					warn(
+						"Roxios warn: Failed to parse response body as JSON! \n"
+							.. parsedResponse
+							.. "\n Setting parsedResponse to nil!"
+					)
+					resolve(nil, response)
+				end
 			else
-				reject(
-					"roxios error: Request failed with status code "
-						.. response.StatusCode
-						.. " and message "
-						.. response
-				)
+				reject("Roxios error: No response from server!")
 			end
-		end
-		local Success, Result = pcall(request)
-		if not Success then
-			reject("roxios error: Request Failed: " .. Result)
+		else
+			reject("Roxios error:\n" .. response)
 		end
 	end)
 end
 
 function module.RbxApiRequest(options: Options)
 	return Promise.new(function(resolve, reject)
-		local function request()
-			if options.Url == nil then
-				reject("roxios error: No URL provided")
-			end
-			if string.find(options.Url, "roblox.com") == nil then
-				reject("roxios error: URL is not a Roblox URL!")
-			end
+		if options.Url == nil then
+			reject("Roxios error: No URL provided")
+		end
+		if string.find(options.Url, "roblox.com") == nil then
+			reject("Roxios error: URL is not a Roblox URL!")
+		end
 
-			options.Url = string.gsub(options.Url, "roblox.com", "roproxy.com") -- why you shouldn't use this: https://devforum.roblox.com/t/psa-stop-using-roblox-proxies/1573256
-			local response = HttpService:RequestAsync(options)
+		options.Url = string.gsub(options.Url, "roblox.com", "roproxy.com") -- why you shouldn't use this: https://devforum.roblox.com/t/psa-stop-using-roblox-proxies/1573256
+		local ok, response = pcall(HttpService.RequestAsync, HttpService, options)
+		if ok then
 			if response.Success then
-				resolve(HttpService:JSONDecode(response.Body), response)
+				local didParse, parsedResponse = pcall(HttpService.JSONDecode, HttpService, response.Body)
+				if didParse then
+					resolve(parsedResponse, response)
+				else
+					warn(
+						"Roxios warn: Failed to parse response body as JSON! \n"
+							.. parsedResponse
+							.. "\n Setting parsedResponse to nil!"
+					)
+					resolve(nil, response)
+				end
 			else
 				reject(
-					"roxios error: Request failed with status code "
+					"Roxios error: Request failed with status code "
 						.. response.StatusCode
-						.. " and message "
+						.. " and message: \n"
 						.. response.Body
 				)
 			end
-		end
-
-		local Success, Result = pcall(request)
-		if not Success then
-			reject("roxios error: Request Failed: " .. Result)
+		else
+			reject("Roxios error:\n" .. response)
 		end
 	end)
 end
