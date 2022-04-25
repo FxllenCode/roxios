@@ -43,7 +43,7 @@ roxios.RbxApiRequest({
 		["Content-Type"] = "application/json",
 	},
 })
-	:andThen(function(parsedResponse, response)
+	:andThen(function(_, response)
 		print(response)
 	end)
 	:catch(function(error)
