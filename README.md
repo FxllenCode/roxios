@@ -14,7 +14,7 @@ To install via [Wally](https://wally.run), add the following to your `wally.toml
 
 ```toml
 [dependencies]
-roxios = "fxllencode/roxios@1.1.5"
+roxios = "fxllencode/roxios@1.1.6"
 ```
 
 Then, run `wally install` to install the dependencies.
@@ -165,6 +165,41 @@ roxios.Request({
 })
 	:andThen(function(parsedResponse)
 		print(parsedResponse.data)
+	end)
+	:catch(function(error)
+		warn(error)
+	end)
+
+roxios.Get("http://httpbin.org/get", true)
+	:andThen(function(parsedResponse)
+		print(parsedResponse)
+	end)
+	:catch(function(error)
+		warn(error)
+	end)
+
+roxios.Post(
+	"https://httpbin.org/post",
+	HttpService:JSONEncode({ hello = "world" }),
+	Enum.HttpContentType.ApplicationJson,
+	false
+)
+	:andThen(function(parsedResponse)
+		print(parsedResponse.data)
+	end)
+	:catch(function(error)
+		warn(error)
+	end)
+
+roxios.RbxApiRequest({
+	Url = "http://setup.roblox.com/version",
+	Method = "GET",
+	Headers = {
+		["Content-Type"] = "application/json",
+	},
+})
+	:andThen(function(_, response)
+		print(response)
 	end)
 	:catch(function(error)
 		warn(error)
