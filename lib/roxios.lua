@@ -6,10 +6,14 @@ local Promise = require(script.Parent.promise)
 
 local module = {}
 
+type Table<K,V> = {
+	[K]: V
+}
+
 type Options = {
 	Url: string,
 	Method: string?,
-	Headers: any?,
+	Headers: Table<any, any>,
 	Body: string?,
 }
 function module.Request(options: Options)
@@ -39,7 +43,7 @@ function module.Request(options: Options)
 	end)
 end
 
-function module.Get(url: string, noCache: boolean?, headers: any?)
+function module.Get(url: string, noCache: boolean?, headers: Table<any, any>?)
 	return Promise.new(function(resolve, reject)
 		local ok, response = pcall(HttpService.GetAsync, HttpService, url, noCache or false, headers or nil)
 		if ok then
@@ -64,7 +68,7 @@ function module.Get(url: string, noCache: boolean?, headers: any?)
 	end)
 end
 
-function module.Post(url: string, json: string, content_type: Enum.HttpContentType?, compress: boolean?, headers: any?)
+function module.Post(url: string, json: string, content_type: Enum.HttpContentType?, compress: boolean?, headers: Table<any, any>?)
 	return Promise.new(function(resolve, reject)
 		local ok, response = pcall(
 			HttpService.PostAsync,
