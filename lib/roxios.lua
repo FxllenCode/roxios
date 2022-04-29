@@ -6,8 +6,8 @@ local Promise = require(script.Parent.promise)
 
 local module = {}
 
-type Table<K,V> = {
-	[K]: V
+type Table<K, V> = {
+	[K]: V,
 }
 
 type Options = {
@@ -68,7 +68,13 @@ function module.Get(url: string, noCache: boolean?, headers: Table<any, any>?)
 	end)
 end
 
-function module.Post(url: string, json: string, content_type: Enum.HttpContentType?, compress: boolean?, headers: Table<any, any>?)
+function module.Post(
+	url: string,
+	json: string,
+	content_type: Enum.HttpContentType?,
+	compress: boolean?,
+	headers: Table<any, any>?
+)
 	return Promise.new(function(resolve, reject)
 		local ok, response = pcall(
 			HttpService.PostAsync,
