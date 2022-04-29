@@ -14,7 +14,7 @@ To install via [Wally](https://wally.run), add the following to your `wally.toml
 
 ```toml
 [dependencies]
-roxios = "fxllencode/roxios@1.1.6"
+roxios = "fxllencode/roxios@1.1.7"
 ```
 
 Then, run `wally install` to install the dependencies.
