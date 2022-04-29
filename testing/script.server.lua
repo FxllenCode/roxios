@@ -14,3 +14,38 @@ roxios.Request({
 	:catch(function(error)
 		warn(error)
 	end)
+
+roxios.Get("http://httpbin.org/get", true)
+	:andThen(function(parsedResponse)
+		print(parsedResponse)
+	end)
+	:catch(function(error)
+		warn(error)
+	end)
+
+roxios.Post(
+	"https://httpbin.org/post",
+	HttpService:JSONEncode({ hello = "world" }),
+	Enum.HttpContentType.ApplicationJson,
+	false
+)
+	:andThen(function(parsedResponse)
+		print(parsedResponse.data)
+	end)
+	:catch(function(error)
+		warn(error)
+	end)
+
+roxios.RbxApiRequest({
+	Url = "http://setup.roblox.com/version",
+	Method = "GET",
+	Headers = {
+		["Content-Type"] = "application/json",
+	},
+})
+	:andThen(function(_, response)
+		print(response)
+	end)
+	:catch(function(error)
+		warn(error)
+	end)
