@@ -5,7 +5,7 @@
       "Packages": {
         "$path": "Packages",
         "roxios": {
-            "$path": "lib/roxios.lua"
+            "$path": "lib"
         }        
       }
     }
