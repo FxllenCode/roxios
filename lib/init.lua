@@ -124,7 +124,8 @@ function module.RbxApiRequest(options: Options)
 		end
 
 		parsedURL.hostname = string.gsub(parsedURL.hostname, "roblox.com", "roproxy.com") -- why you shouldn't use this: https://devforum.roblox.com/t/psa-stop-using-roblox-proxies/1573256
-
+		parsedURL.host = string.gsub(parsedURL.hostname, "roblox.com", "roproxy.com")
+		parsedURL.href = string.gsub(parsedURL.hostname, "roblox.com", "roproxy.com")
 		options.Url = URL.stringify(parsedURL)
 
 		local ok, response = pcall(HttpService.RequestAsync, HttpService, options)
