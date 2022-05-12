@@ -3,6 +3,7 @@
 
 local HttpService = game:GetService("HttpService")
 local Promise = require(script.Parent.promise)
+local URL = require(script.Parent.URL)
 
 local module = {}
 
@@ -112,11 +113,21 @@ function module.RbxApiRequest(options: Options)
 		if options.Url == nil then
 			reject("Roxios error: No URL provided")
 		end
-		if string.find(options.Url, "roblox.com") == nil then
-			reject("Roxios error: URL is not a Roblox URL!")
+		local parsedURL = URL.parse(options.Url)
+
+		if parsedURL == nil and parsedURL.hostname == nil then
+			reject("Roxios error: Could not parse URL!")
 		end
 
-		options.Url = string.gsub(options.Url, "roblox.com", "roproxy.com") -- why you shouldn't use this: https://devforum.roblox.com/t/psa-stop-using-roblox-proxies/1573256
+		if string.find(parsedURL.hostname, "roblox.com") == false or nil then
+			reject('Roxios error: URL is not a "*.roblox.com" domain!')
+		end
+
+		parsedURL.hostname = string.gsub(parsedURL.hostname, "roblox.com", "roproxy.com") -- why you shouldn't use this: https://devforum.roblox.com/t/psa-stop-using-roblox-proxies/1573256
+		parsedURL.host = string.gsub(parsedURL.hostname, "roblox.com", "roproxy.com")
+		parsedURL.href = string.gsub(parsedURL.hostname, "roblox.com", "roproxy.com")
+		options.Url = URL.stringify(parsedURL)
+
 		local ok, response = pcall(HttpService.RequestAsync, HttpService, options)
 		if ok then
 			if response.Success then
